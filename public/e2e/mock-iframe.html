@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E2E Mock Iframe</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f8fafc;
+        color: #0f172a;
+      }
+
+      .container {
+        padding: 24px;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: #dbeafe;
+        color: #1d4ed8;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <h1 data-testid="mock-iframe-title">Mock Iframe Content</h1>
+      <p>该页面用于 Playwright E2E 验证 iframe 承载能力。</p>
+      <span class="badge" data-testid="mock-iframe-badge">iframe-ready</span>
+    </main>
+  </body>
+</html>

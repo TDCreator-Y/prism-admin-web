@@ -1,0 +1,26 @@
+# 依赖与构建产物
+node_modules/
+dist/
+dist-ssr/
+coverage/
+
+# pnpm 本地缓存
+.pnpm-store-local/
+
+# 测试报告
+playwright-report/
+test-results/
+.playwright-mcp/
+
+# 环境变量（含密钥，绝不提交）
+.env*.local
+.env.production
+
+# 编辑器 / 系统
+.vscode/extensions.json
+.DS_Store
+Thumbs.db
+
+# Vite 缓存
+*.local
+.vite/

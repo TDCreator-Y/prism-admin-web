@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica,
+    Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* 强制亮色模式渲染原生控件（滚动条、checkbox、radio 等），
+     避免系统暗色主题影响正式环境 light 模式下的原生元素外观 */
+  color-scheme: light;
+
+  /* 主题色 - 默认蓝色 */
+  --color-primary: #3b82f6;
+  --color-primary-hover: #2563eb;
+  --color-primary-light: #dbeafe;
+  --color-primary-dark: #1d4ed8;
+  --color-primary-bg: rgba(59, 130, 246, 0.1);
+}
+
+/* 暗色模式基础样式 */
+.dark {
+  color-scheme: dark;
+}
+
+.dark body {
+  background-color: #111827;
+  color: #f3f4f6;
+}
+
+/* 暗色模式下的主题色 - 使用动态变量 */
+.dark {
+  --color-primary-light: var(--color-primary-dark-mode-light, rgba(59, 130, 246, 0.15));
+  --color-primary-bg: var(--color-primary-dark-mode-bg, rgba(59, 130, 246, 0.1));
+  --color-primary-hover: var(--color-primary-dark-mode-hover, rgba(59, 130, 246, 0.25));
+}
+
+/* 主题色应用类 */
+.text-primary {
+  color: var(--color-primary);
+}
+
+.bg-primary {
+  background-color: var(--color-primary);
+}
+
+.bg-primary-light {
+  background-color: var(--color-primary-light);
+}
+
+.bg-primary-bg {
+  background-color: var(--color-primary-bg);
+}
+
+.hover\:bg-primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.hover\:text-primary:hover {
+  color: var(--color-primary);
+}
+
+.border-primary {
+  border-color: var(--color-primary);
+}
+
+.ring-primary {
+  --tw-ring-color: var(--color-primary);
+}
+
+/* 侧边栏菜单激活状态 */
+.menu-active {
+  background-color: var(--color-primary-bg);
+  color: var(--color-primary);
+}
+
+.menu-active:hover {
+  background-color: var(--color-primary-light);
+}
+
+/* 暗色模式下的菜单激活状态 */
+.dark .menu-active:hover {
+  background-color: var(--color-primary-dark-mode-light);
+}
+
+/* 标签页激活状态 */
+.tab-active {
+  background-color: var(--color-primary-bg);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* 按钮主题色 */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+/* 隐藏滚动条样式 */
+.scrollbar-hide {
+  /* IE, Edge, Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Chrome, Safari, Opera */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* 正式环境修复：
+   1. UMD 组件可能在容器上设了 color-scheme:dark，导致原生 checkbox/radio
+      在 light 模式下也以暗色渲染（Background 显示 #FFFFFF 但视觉是黑色）。
+   2. UMD 组件可能对 input 设了 appearance:none + 深色背景。
+   编译后的 dashboard CSS 排在 UMD <style> 之后（优先级更高），
+   用 color-scheme:light 强制原生控件以亮色渲染，
+   用 appearance:auto 恢复原生渲染（覆盖 appearance:none），
+   accent-color 使 checked 状态跟随主题色。 */
+input[type="checkbox"],
+input[type="radio"] {
+  -webkit-appearance: auto;
+  -moz-appearance: auto;
+  appearance: auto;
+  color-scheme: light;
+  accent-color: var(--color-primary);
+}
+
+/* dark 模式下恢复暗色原生渲染 */
+.dark input[type="checkbox"],
+.dark input[type="radio"] {
+  color-scheme: dark;
+}
+
+/* NProgress 自定义颜色覆盖 */
+#nprogress .bar {
+  background: var(--nprogress-color, #29d) !important;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px var(--nprogress-color, #29d), 0 0 5px var(--nprogress-color, #29d) !important;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: var(--nprogress-color, #29d) !important;
+  border-left-color: var(--nprogress-color, #29d) !important;
+}
