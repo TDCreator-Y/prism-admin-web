@@ -81,7 +81,7 @@
 
   // 获取全局配置中的 Logo 和显示名称
   const systemName = computed(() => {
-    return window.uiGlobalConfig?.DisplayName || 'Dashboard LightWeight';
+    return window.uiGlobalConfig?.DisplayName || 'Prism';
   });
 
   const systemIcon = computed(() => {

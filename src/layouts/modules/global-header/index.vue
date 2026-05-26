@@ -40,7 +40,7 @@
 
   // 全局配置相关的展示字段
   const systemName = computed(() => {
-    return window.uiGlobalConfig?.DisplayName || 'Dashboard';
+    return window.uiGlobalConfig?.DisplayName || 'Prism';
   });
 
   const systemIcon = computed(() => {

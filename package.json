@@ -1,6 +1,7 @@
 {
-  "name": "dashboard-lightweight-template",
+  "name": "prism-admin-web",
   "version": "0.0.0",
+  "description": "Prism 棱镜后台管理系统 v1.0",
   "type": "module",
   "private": true,
   "packageManager": "pnpm@8.15.0",

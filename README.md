@@ -1,6 +1,6 @@
 <p align="center">
-  <h1 align="center">Dashboard LightWeight</h1>
-  <p align="center">一个基于 Vue 3 + TypeScript + Vite + Tailwind CSS 的轻量级中后台管理系统模板</p>
+  <h1 align="center">Prism Admin Web</h1>
+  <p align="center">基于 Vue 3 + Vite 的现代化中后台管理基座。</p>
   <p align="center">A lightweight admin dashboard template built with Vue 3 + TypeScript + Vite + Tailwind CSS</p>
 </p>
 
@@ -89,7 +89,7 @@ src/
 
 ```bash
 # 进入项目目录
-cd Dashboard-lightWeight
+cd prism-admin-web
 
 # 安装依赖
 pnpm install

@@ -19,8 +19,8 @@ export class UnauthorizedError extends Error {
 const MOCK_MENU_DATA: MenuApiResponse = {
   MenuRoot: {
     routeId: 'root-mock',
-    Title: 'Dashboard LightWeight',
-    DisplayName: 'Dashboard LightWeight',
+    Title: 'Prism',
+    DisplayName: 'Prism',
   },
   MenusMain: {
     Total: 2,
