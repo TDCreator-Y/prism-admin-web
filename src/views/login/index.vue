@@ -253,7 +253,7 @@
     </div>
 
     <!-- 页脚版权 -->
-    <div class="page-footer">© 2025 Dashboard LightWeight · 保留所有权利</div>
+    <div class="page-footer">© 2025 Prism · 保留所有权利</div>
   </div>
 </template>
 

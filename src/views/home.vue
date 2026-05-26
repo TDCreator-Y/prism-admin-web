@@ -9,7 +9,7 @@
       class="bg-gradient-to-r from-blue-500 to-blue-600 dark:from-blue-900 dark:to-gray-800 rounded-xl p-6 text-white"
       data-testid="home-hero"
     >
-      <h1 class="text-2xl font-bold mb-2">欢迎使用 Dashboard LightWeight</h1>
+      <h1 class="text-2xl font-bold mb-2">欢迎使用 Prism</h1>
       <p class="text-blue-100 dark:text-blue-200">一个现代化的 Vue 3 + Tailwind CSS 中后台管理模板</p>
     </div>
 

@@ -12,7 +12,7 @@ NProgress.configure({ showSpinner: false });
 // 路由守卫配置
 const guardsConfig = {
   enabled: true,
-  defaultTitle: 'Dashboard LightWeight',
+  defaultTitle: 'Prism',
 };
 
 export function setupRouteGuards(router: Router) {

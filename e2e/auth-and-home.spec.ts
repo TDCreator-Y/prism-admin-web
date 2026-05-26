@@ -17,7 +17,7 @@ test.describe('登录与首页', () => {
     await expect(page.getByTestId('app-layout')).toBeVisible();
     await expect(page).toHaveURL(/#\/home$/);
     await expect(page.getByTestId('home-page')).toBeVisible();
-    await expect(page.getByTestId('home-hero')).toContainText('欢迎使用 Dashboard LightWeight');
+    await expect(page.getByTestId('home-hero')).toContainText('欢迎使用 Prism');
 
     await expect
       .poll(() => page.evaluate(() => window.uiGlobalConfig?.IsAuthenticated === true))

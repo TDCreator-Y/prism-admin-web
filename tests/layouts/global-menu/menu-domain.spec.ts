@@ -12,7 +12,7 @@ function createTheme(layout: ThemeConfig['layout'] = 'mix') {
     showBreadcrumb: true,
     showFooter: false,
     showWatermark: false,
-    watermarkText: 'Dashboard LightWeight',
+    watermarkText: 'Prism',
     preserveHomeTab: true,
   });
 }

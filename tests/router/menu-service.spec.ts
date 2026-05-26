@@ -6,7 +6,7 @@ describe('menu-service', () => {
 
     expect(data.MenuRoot).toMatchObject({
       routeId: 'root-mock',
-      Title: 'Dashboard LightWeight',
+      Title: 'Prism',
     });
     expect(data.MenusMain.Total).toBe(2);
     expect(data.MenusMain.Results).toEqual(

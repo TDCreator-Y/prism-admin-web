@@ -145,7 +145,7 @@ const { form, isLoading, errorMsg, handleLogin } = useLoginSubmit({
             </g>
           </svg>
           <div class="brand-text">
-            <span class="brand-name">Dashboard LightWeight</span>
+            <span class="brand-name">Prism</span>
             <span class="brand-sub">春日·欢迎归来</span>
           </div>
         </div>
@@ -256,7 +256,7 @@ const { form, isLoading, errorMsg, handleLogin } = useLoginSubmit({
       </div>
     </div>
 
-    <p class="copyright">© 2025 Dashboard LightWeight · All Rights Reserved</p>
+    <p class="copyright">© 2025 Prism · All Rights Reserved</p>
   </div>
 </template>
 

@@ -34,7 +34,7 @@ function createTheme(preserveHomeTab = true) {
     showBreadcrumb: true,
     showFooter: false,
     showWatermark: false,
-    watermarkText: 'Dashboard LightWeight',
+    watermarkText: 'Prism',
     preserveHomeTab,
   });
 }

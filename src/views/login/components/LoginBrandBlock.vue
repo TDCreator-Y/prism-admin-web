@@ -38,7 +38,7 @@
       </svg>
     </div>
     <div class="brand-text">
-      <h1 class="brand-name">Dashboard LightWeight</h1>
+      <h1 class="brand-name">Prism</h1>
       <p class="brand-tagline">企业级后台管理系统</p>
     </div>
   </div>

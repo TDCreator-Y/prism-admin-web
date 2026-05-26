@@ -11,7 +11,7 @@ const DEFAULT_THEME: ThemeConfig = {
   showBreadcrumb: true,
   showFooter: false,
   showWatermark: false,
-  watermarkText: 'Dashboard LightWeight',
+  watermarkText: 'Prism',
   preserveHomeTab: true,
 };
 
