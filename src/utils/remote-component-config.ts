@@ -29,6 +29,17 @@ export const loadConfig = async (_configPath: string): Promise<Config> => {
           zhName: '仪表盘标准组件',
         },
       },
+      {
+        name: 'TpkAdmin',
+        type: 'umd',
+        version: '1.0.0',
+        path: '/umd/kivii-component-demo-library.umd.js',
+        globalName: 'VueComponent',
+        autoRegister: true,
+        metadata: {
+          zhName: '标书图片库管理',
+        },
+      },
     ],
   };
 };
