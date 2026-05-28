@@ -1,6 +1,6 @@
 # Vue 动态组件与 Teleport 投射页面实现详解
 
-本文档详细分析了 `src/views/_builtin/iframe-page/[url].vue` 及其相关组件的实现机制。该架构采用了 **"路由负责状态，Teleport 负责渲染"** 的模式，通过全局管理器（Store）来控制多组件实例的共存与切换，完美解决了 iframe 和 Vue 组件在复杂 Tab 切换场景下的状态保持问题。
+本文档详细分析了 `src/views/_builtin/iframe-page/index.vue` 及其相关组件的实现机制。该架构采用了 **"路由负责状态，Teleport 负责渲染"** 的模式，通过全局管理器（Store）来控制多组件实例的共存与切换，完美解决了 iframe 和 Vue 组件在复杂 Tab 切换场景下的状态保持问题。
 
 ## 1. 核心架构概述
 
@@ -15,7 +15,7 @@
 
 ## 2. 核心文件分析
 
-### 2.1 入口分发器：`iframe-page/[url].vue`
+### 2.1 入口分发器：`iframe-page/index.vue`
 
 这是路由对应的视图组件，它充当**分发器**（Dispatcher）。
 
@@ -112,7 +112,7 @@
 ```vue
 <script setup lang="ts">
 import { ref, watchEffect, onMounted, onActivated, onBeforeUnmount } from 'vue';
-import { useTeleportManager } from '@/store/teleport-manager';
+import { useTeleportManager } from '@/store/modules/teleport-manager';
 
 const props = defineProps<{ pageId: string }>();
 const manager = useTeleportManager();
@@ -201,7 +201,7 @@ const pageId = `page-${route.path}-${Date.now()}`;
 
 | 功能点 | 实现方式 |
 | :--- | :--- |
-| **多组件渲染** | 父组件 (`[url].vue`) 根据类型 (`v-if/v-else-if`) 渲染不同的子组件包装器。 |
+| **多组件渲染** | 父组件 (`index.vue`) 根据类型 (`v-if/v-else-if`) 渲染不同的子组件包装器。 |
 | **组件状态保持** | 路由层开启 `KeepAlive` 保持组件实例不被销毁；渲染层使用 `v-show` 保持 DOM 元素不被移除。 |
 | **唯一 ID** | `url` + `routeId` + `timestamp` 组合生成，确保多 Tab 打开同一 URL 时互不干扰。 |
 | **显示控制** | **Pinia Store (单一数据源)** 决定哪个 ID 是 Active 的，组件内部 `watch` 该状态来切换 `v-show`。 |

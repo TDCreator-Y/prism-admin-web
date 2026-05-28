@@ -3,11 +3,11 @@
 本文档基于当前仓库的 IframePage 实现，说明入口组件、两种渲染分支、Teleport 管理与资源回收策略。
 
 ## 相关文件
-- 入口组件：[index.vue](file:///e:/Dashboard/prism-admin-web/src/views/_builtin/iframe-page/index.vue)
-- Webview 渲染器：[webview.vue](file:///e:/Dashboard/prism-admin-web/src/views/_builtin/iframe-page/webview.vue)
-- Vue 动态组件渲染器：[vueComponent.vue](file:///e:/Dashboard/prism-admin-web/src/views/_builtin/iframe-page/vueComponent.vue)
-- 页面状态管理：[teleport-manager.ts](file:///e:/Dashboard/prism-admin-web/src/store/modules/teleport-manager.ts)
-- 布局容器：[base-layout/index.vue](file:///e:/Dashboard/prism-admin-web/src/layouts/base-layout/index.vue)
+- 入口组件：[index.vue](../src/views/_builtin/iframe-page/index.vue)
+- Webview 渲染器：[webview.vue](../src/views/_builtin/iframe-page/webview.vue)
+- Vue 动态组件渲染器：[vueComponent.vue](../src/views/_builtin/iframe-page/vueComponent.vue)
+- 页面状态管理：[teleport-manager.ts](../src/store/modules/teleport-manager.ts)
+- 布局容器：[base-layout/index.vue](../src/layouts/base-layout/index.vue)
 
 ## 模块职责
 - 统一承载动态菜单页面。
@@ -22,12 +22,12 @@
 - 注释里保留的历史权限请求只用于说明接回后端时的接入点，不代表当前需要修改的运行时接口。
 
 ## 渲染分支
-- `renderType === 'webview'` 时，使用 [webview.vue](file:///e:/Dashboard/prism-admin-web/src/views/_builtin/iframe-page/webview.vue) 渲染 iframe 页面。
-- `renderType === 'vue'` 时，使用 [vueComponent.vue](file:///e:/Dashboard/prism-admin-web/src/views/_builtin/iframe-page/vueComponent.vue) 动态加载并渲染 Vue 组件。
+- `renderType === 'webview'` 时，使用 [webview.vue](../src/views/_builtin/iframe-page/webview.vue) 渲染 iframe 页面。
+- `renderType === 'vue'` 时，使用 [vueComponent.vue](../src/views/_builtin/iframe-page/vueComponent.vue) 动态加载并渲染 Vue 组件。
 - 如果 `props.type` 未显式指定，但 URL 或 `functionId` 以 `.vue` 结尾，入口组件会自动识别为 `vue`。
 
 ## Teleport 与页面切换
-- 页面实例 ID 由 [teleport-manager.ts](file:///e:/Dashboard/prism-admin-web/src/store/modules/teleport-manager.ts) 的 `generatePageId()` 生成。
+- 页面实例 ID 由 [teleport-manager.ts](../src/store/modules/teleport-manager.ts) 的 `generatePageId()` 生成。
 - `registerPage()`、`requestActivation()`、`forceActivate()` 负责注册页面、请求激活和切换显示。
 - `shouldShowPage()` 根据 `pending`、`loading`、`ready`、`active`、`hidden` 状态控制页面是否可见。
 - 多标签页切换时，IframePage 只保留当前活动实例为可见状态，其他实例转为隐藏。

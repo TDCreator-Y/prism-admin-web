@@ -1,23 +1,39 @@
 # 动态加载远程组件实现方案
 
-本文档整理了 `src/main.ts` 中关于动态加载远程组件（UMD/ESM）的核心实现代码。该方案支持通过 JSON 配置文件动态注册 Vue 组件，适用于微前端或插件化架构。
+本文档说明动态加载远程组件（UMD/ESM）的核心实现，该功能由以下专用工具模块负责：
+
+| 文件 | 职责 |
+|------|------|
+| `src/utils/remote-component-types.ts` | 接口与类型定义 |
+| `src/utils/remote-component-loaders.ts` | UMD / ESM 加载逻辑 |
+| `src/utils/remote-component-registrar.ts` | 组件注册到 Vue 应用实例 |
+| `src/utils/remote-component-config.ts` | 配置文件读取 |
+| `src/utils/remote-component-state.ts` | 已加载库的运行时状态 |
+| `src/config/remote-components.ts` | 静态组件端点配置 |
+
+该方案支持通过 JSON 配置文件动态注册 Vue 组件，适用于微前端或插件化架构。
 
 ## 1. 核心接口定义
 
-定义了组件配置的数据结构，支持区分 UMD 和 ESM 两种模块类型。
+定义了组件配置的数据结构，支持区分 UMD 和 ESM 两种模块类型（位于 `src/utils/remote-component-types.ts`）。
 
 ```typescript
-// 组件配置接口定义
-interface ComponentConfig {
+export interface ComponentConfig {
   name: string;
   type: 'umd' | 'esm';
   version: string;
   path: string;
-  globalName?: string; // UMD组件在全局对象中的名称 (例如: VueComponent)
-  dependencies?: string[]; // 组件依赖的其他资源
+  globalName?: string;       // UMD 组件在全局对象中的名称（如 VueComponent）
+  integrity?: string;        // SRI 完整性校验哈希
+  dependencies?: string[];   // 组件依赖的其他资源
+  autoRegister?: boolean;    // 是否自动注册到 Vue 应用
+  metadata?: {
+    zhName?: string;
+    componentsDetailed?: RemoteComponentDetail[];
+  };
 }
 
-interface Config {
+export interface Config {
   components: ComponentConfig[];
 }
 ```
@@ -140,35 +156,31 @@ const loadComponent = async (componentConfig: ComponentConfig): Promise<any> => 
 
 ## 4. 组件注册逻辑
 
-将加载回来的组件注册到 Vue 应用实例中。
+将加载回来的组件注册到 Vue 应用实例中（位于 `src/utils/remote-component-registrar.ts`）。
+
+注意：`registerComponent` 需要将 `app` 实例作为第一个参数传入。
 
 ```typescript
 // 注册单个组件
-const registerComponent = async (componentConfig: ComponentConfig) => {
+export const registerComponent = async (app: App, componentConfig: ComponentConfig) => {
   try {
-    console.log(`Loading component: ${componentConfig.name} (${componentConfig.type}) from ${componentConfig.path}`);
-
-    // 使用通用组件加载器
     const remoteComponent = await loadComponent(componentConfig);
 
     // 1. 插件模式：如果组件有 install 方法，使用 app.use()
     if (remoteComponent.install) {
       app.use(remoteComponent);
-      console.log(`Component plugin ${componentConfig.name} registered successfully`);
-    } 
+    }
     // 2. 具名导出模式：如果组件对象包含与 name 匹配的属性
     else if (remoteComponent[componentConfig.name]) {
       app.component(componentConfig.name, remoteComponent[componentConfig.name]);
-      console.log(`Component ${componentConfig.name} registered successfully`);
-    } 
+    }
     // 3. 直接组件模式：直接注册返回的对象
     else {
       app.component(componentConfig.name, remoteComponent);
-      console.log(`Component ${componentConfig.name} registered as direct component`);
     }
   } catch (error) {
     console.error(`Failed to load component ${componentConfig.name}:`, error);
-    throw error; // 重新抛出错误以便上层处理
+    throw error;
   }
 };
 ```
@@ -235,31 +247,17 @@ const registerRemoteComponents = async () => {
 
 ## 6. 应用启动流程
 
-确保远程组件加载完成后再挂载应用（或根据需求调整顺序）。
+远程组件加载在应用启动时异步执行，不阻塞主流程挂载。具体协调逻辑位于 `src/router/routes/dynamic-routes.ts` 的 `generateDynamicRoutes()`，它会等待远程组件注册完成后再生成动态路由。
 
 ```typescript
-// 初始化应用
-const initApp = async () => {
-  console.log('Initializing application...');
+// src/router/routes/dynamic-routes.ts（示意）
+export async function generateDynamicRoutes() {
+  // 等待远程 UMD 组件注册完成
+  await waitForRemoteComponents();
 
-  try {
-    // 先注册远程组件
-    await registerRemoteComponents();
-    console.log('Remote components registration completed');
-    
-    // 注意：在 main.ts 中，通常在这里执行 app.mount('#app')
-    // 但在当前代码中，app.mount 可能已经在外部执行，这里主要用于异步加载补充组件
-  } catch (error) {
-    console.error('Application initialization failed:', error);
-    
-    // 即使组件加载失败，也要确保应用可用
-    console.log('Application mounted with fallback mode (some components may not be available)');
-  }
-};
-
-// 启动入口
-setTimeout(() => {
-  // setupApp(); // 原有的同步 setup
-  initApp();    // 启动动态加载
-}, 200);
+  // 再尝试从缓存恢复或重新拉取菜单数据
+  // ...
+}
 ```
+
+即使部分组件加载失败，应用仍可正常启动，失败的组件会记录错误状态，不影响其他功能。
