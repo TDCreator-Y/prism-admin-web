@@ -41,6 +41,8 @@ function resolveRedirectTarget(rawRedirect?: string): string {
 function markReloadAfterLogin() {
   if (import.meta.env.PROD) {
     sessionStorage.setItem('need_reload_after_login', 'true');
+    // 持久化认证状态，确保 reload 后路由守卫仍能读到 IsAuthenticated=true
+    sessionStorage.setItem('prism_post_login_auth', 'true');
   }
 }
 
